@@ -1,0 +1,108 @@
+- var link = 'media-streams-api'
+- var title = 'Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製'
+- var description = 'Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製'
+
+<!DOCTYPE html>
+html(lang="zh-Hant")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible", content="ie=edge")
+    title #{title} - August - Let's Write
+
+    link(rel="canonical", href=`https://www.letswrite.tw/${link}/`)
+    meta(property="og:url", content=`https://letswritetw.github.io/letswrite-${link}/`)
+
+    meta(property="fb:app_id", content="911000986339138")
+    meta(property="og:type", content="website")
+
+    meta(property="og:site_name", content="Let's Write")
+    meta(property="og:title", content=`${title} - Augustus - Let's Write`)
+    meta(itemprop="name", content=`${title} - Augustus - Let's Write`)
+
+    meta(name="description", content=description)
+    meta(property="og:description", content=description)
+    meta(itemprop="description", content=description)
+
+    meta(itemprop="image", content=`https://letswritetw.github.io/letswrite-${link}/fb.jpg`)
+    meta(property="og:image", content=`https://letswritetw.github.io/letswrite-${link}/fb.jpg`)
+    meta(property="og:image:width", content="1200")
+    meta(property="og:image:height", content="630")
+    meta(property="og:image:alt", content=title)
+
+    link(rel="shortcut icon", href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png")
+
+    // Tailwind CSS
+    script(src="https://cdn.tailwindcss.com")
+    link(rel="stylesheet", href="dist/style.min.css", media="screen")
+    script.
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              main: '#42A6F7',
+            }
+          }
+        }
+      }
+    
+    // CSS
+    link(rel="stylesheet", href="dist/style.min.css", media="screen")
+
+    // Google Tag Manager
+    script.
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PGQ9WQT');
+  body
+
+    // Google Tag Manager (noscript)
+    noscript
+      iframe(src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT", height="0", width="0", style="display:none;visibility:hidden")
+    
+    .container.mx-auto.py-10(class="px-4 sm:px-10")
+      .text-center
+        h1.mb-6.font-bold.text-4xl=title
+        //- p 筆記文：
+        //-   a.text-main.underline(class="hover:no-underline", href=`https://www.letswrite.tw/${link}/`) Let's Write
+        hr.my-8.border-0.border-b.border-zinc-200.border-opacity-40
+      
+      // 按鈕
+      mixin btn(id, href, text)
+        a(id=id, class="mx-2 px-4 py-2 bg-main outline-none rounded text-white shadow-main-200 shadow-lg active:shadow-none active:scale-95 hover:bg-main-600 focus:bg-main-600 focus:ring-2 focus:ring-main-600 focus:ring-offset-2 disabled:bg-gray-400/80 transition-colors duration-200", href=href)=text
+
+      .mb-10.text-center
+        .hidden
+          +btn("getUserMedia", "#", "開啟桌機鏡頭")
+          +btn("startCapture", "#", "分享畫面")
+        div.mb-8
+        +btn("getUserMediaPhone", "#", "開啟手機鏡頭")
+        +btn("flipFacingMode", "#", "翻轉手機鏡頭")
+      
+      // 畫面
+      .relative(class="mb-10 max-w-7xl w-full h-0 pb-[177%] sm:pb-[56.25%]")
+        video#video(class="absolute block w-full h-full")
+      
+      hr.my-8.border-0.border-b.border-zinc-200.border-opacity-40
+
+      // 按鈕
+      .mb-28.text-center
+        +btn("getEnumerateDevices", "#", "取得輸入源清單")
+        +btn("getSupportedConstraints", "#", "取得支援項目清單")
+
+      // 資訊清單
+      .relative.flex.justify-center(class="flex-wrap sm:flex-nowrap")
+        #card-enumerate.w-96.mx-4.bg-white.shadow-xl(class="mb-8 sm:mb-0")
+          .text-center
+            .mt-2.text-2xl.font-medium 輸入源
+          .content.px-6.py-2.text-sm
+
+        #card-support.w-96.mx-4.bg-white.shadow-xl
+          .text-center
+            .mt-2.text-2xl.font-medium 裝置支援項目
+          .content.px-6.py-2.text-sm
+
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js")
+    script(src="dist/main.min.js")

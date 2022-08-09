@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製 - August - Let's Write</title>
+    <link rel="canonical" href="https://www.letswrite.tw/media-streams-api/"/>
+    <meta property="og:url" content="https://letswritetw.github.io/letswrite-media-streams-api/"/>
+    <meta property="fb:app_id" content="911000986339138"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:site_name" content="Let's Write"/>
+    <meta property="og:title" content="Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製 - Augustus - Let's Write"/>
+    <meta itemprop="name" content="Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製 - Augustus - Let's Write"/>
+    <meta name="description" content="Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製"/>
+    <meta property="og:description" content="Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製"/>
+    <meta itemprop="description" content="Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製"/>
+    <meta itemprop="image" content="https://letswritetw.github.io/letswrite-media-streams-api/fb.jpg"/>
+    <meta property="og:image" content="https://letswritetw.github.io/letswrite-media-streams-api/fb.jpg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+    <meta property="og:image:alt" content="Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製"/>
+    <link rel="shortcut icon" href="https://letswritetw.github.io/letswritetw/dist/img/logo_512.png"/>
+    <!-- Tailwind CSS-->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="dist/style.min.css" media="screen"/>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              main: '#42A6F7',
+            }
+          }
+        }
+      }
+      
+    </script>
+    <!-- CSS-->
+    <link rel="stylesheet" href="dist/style.min.css" media="screen"/>
+    <!-- Google Tag Manager-->
+    <script>
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-PGQ9WQT');
+    </script>
+  </head>
+  <body>
+    <!-- Google Tag Manager (noscript)-->
+    <noscript>
+      <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PGQ9WQT" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <div class="container mx-auto py-10 px-4 sm:px-10">
+      <div class="text-center">
+        <h1 class="mb-6 font-bold text-4xl">Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製</h1>
+        <hr class="my-8 border-0 border-b border-zinc-200 border-opacity-40"/>
+      </div>
+      <!-- 按鈕-->
+      <div class="mb-10 text-center">
+        <div class="hidden"><a class="mx-2 px-4 py-2 bg-main outline-none rounded text-white shadow-main-200 shadow-lg active:shadow-none active:scale-95 hover:bg-main-600 focus:bg-main-600 focus:ring-2 focus:ring-main-600 focus:ring-offset-2 disabled:bg-gray-400/80 transition-colors duration-200" id="getUserMedia" href="#">開啟桌機鏡頭</a><a class="mx-2 px-4 py-2 bg-main outline-none rounded text-white shadow-main-200 shadow-lg active:shadow-none active:scale-95 hover:bg-main-600 focus:bg-main-600 focus:ring-2 focus:ring-main-600 focus:ring-offset-2 disabled:bg-gray-400/80 transition-colors duration-200" id="startCapture" href="#">分享畫面</a>
+        </div>
+        <div class="mb-8"></div><a class="mx-2 px-4 py-2 bg-main outline-none rounded text-white shadow-main-200 shadow-lg active:shadow-none active:scale-95 hover:bg-main-600 focus:bg-main-600 focus:ring-2 focus:ring-main-600 focus:ring-offset-2 disabled:bg-gray-400/80 transition-colors duration-200" id="getUserMediaPhone" href="#">開啟手機鏡頭</a><a class="mx-2 px-4 py-2 bg-main outline-none rounded text-white shadow-main-200 shadow-lg active:shadow-none active:scale-95 hover:bg-main-600 focus:bg-main-600 focus:ring-2 focus:ring-main-600 focus:ring-offset-2 disabled:bg-gray-400/80 transition-colors duration-200" id="flipFacingMode" href="#">翻轉手機鏡頭</a>
+      </div>
+      <!-- 畫面-->
+      <div class="relative mb-10 max-w-7xl w-full h-0 pb-[177%] sm:pb-[56.25%]">
+        <video class="absolute block w-full h-full" id="video"></video>
+      </div>
+      <hr class="my-8 border-0 border-b border-zinc-200 border-opacity-40"/>
+      <!-- 按鈕-->
+      <div class="mb-28 text-center"><a class="mx-2 px-4 py-2 bg-main outline-none rounded text-white shadow-main-200 shadow-lg active:shadow-none active:scale-95 hover:bg-main-600 focus:bg-main-600 focus:ring-2 focus:ring-main-600 focus:ring-offset-2 disabled:bg-gray-400/80 transition-colors duration-200" id="getEnumerateDevices" href="#">取得輸入源清單</a><a class="mx-2 px-4 py-2 bg-main outline-none rounded text-white shadow-main-200 shadow-lg active:shadow-none active:scale-95 hover:bg-main-600 focus:bg-main-600 focus:ring-2 focus:ring-main-600 focus:ring-offset-2 disabled:bg-gray-400/80 transition-colors duration-200" id="getSupportedConstraints" href="#">取得支援項目清單</a>
+      </div>
+      <!-- 資訊清單-->
+      <div class="relative flex justify-center flex-wrap sm:flex-nowrap">
+        <div class="w-96 mx-4 bg-white shadow-xl mb-8 sm:mb-0" id="card-enumerate">
+          <div class="text-center">
+            <div class="mt-2 text-2xl font-medium">輸入源</div>
+          </div>
+          <div class="content px-6 py-2 text-sm"></div>
+        </div>
+        <div class="w-96 mx-4 bg-white shadow-xl" id="card-support">
+          <div class="text-center">
+            <div class="mt-2 text-2xl font-medium">裝置支援項目</div>
+          </div>
+          <div class="content px-6 py-2 text-sm"></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-polyfill/7.12.1/polyfill.min.js"></script>
+    <script src="dist/main.min.js"></script>
+  </body>
+</html>
