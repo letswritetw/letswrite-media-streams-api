@@ -18,44 +18,33 @@ document.addEventListener('DOMContentLoaded', async () => {
       video.play();
     };
   }
-  const btnUserDesktop = document.getElementById('getUserMedia');
-  btnUserDesktop.addEventListener('click', async e => {
-    e.preventDefault();
-    const constraints = {
-      audio: true,
-      video: {
-        // deviceId: xxxxxx, // 可以指定要哪用個裝置，從 enumerateDevices 取得裝置 id
-        width: { ideal: 1280 }, // 給理想值時，瀏覽器會去找符合理想值的裝置
-        height: { ideal: 720 }
-      }
-    };
-    await getMedia(constraints);
-  }, false);
 
   let facingMode = false; // false：後鏡頭、true：前鏡頭
-  let constraintsPhone = {
+  let constraints = {
+    // deviceId: xxxxxx, // 可以指定要哪用個裝置，從 enumerateDevices 取得裝置 id
     audio: true,
     video: {
-      width: { min: 1280, ideal: 1280, max: 1920 },
-      height: { min: 720, ideal: 720, max: 1080 },
+      // 給理想值時，瀏覽器會去找符合理想值的裝置
+      width: { ideal: 1280 },
+      height: { ideal: 720 },
+
       // 行動裝置才能使用
       // user：前鏡頭、environment：後鏡頭
       facingMode: 'environment'
-
     }
   };
-  
-  const btnUserPhone = document.getElementById('getUserMediaPhone');
-  btnUserPhone.addEventListener('click', async e => {
+  const btnUser = document.getElementById('getUserMedia');
+  btnUser.addEventListener('click', async e => {
     e.preventDefault();
-    await getMedia(constraintsPhone);
-  }, false)
+    await getMedia(constraints);
+  }, false);
+
   const btnFlip = document.getElementById('flipFacingMode');
   btnFlip.addEventListener('click', async e => {
     e.preventDefault();
     facingMode = !facingMode;
-    constraintsPhone.video.facingMode = facingMode ? 'user' : 'environment';
-    await getMedia(constraintsPhone);
+    constraints.video.facingMode = facingMode ? 'user' : 'environment';
+    await getMedia(constraints);
   }, false)
 
 

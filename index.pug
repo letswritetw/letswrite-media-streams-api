@@ -74,12 +74,10 @@ html(lang="zh-Hant")
         a(id=id, class="mx-2 px-4 py-2 bg-main outline-none rounded text-white shadow-main-200 shadow-lg active:shadow-none active:scale-95 hover:bg-main-600 focus:bg-main-600 focus:ring-2 focus:ring-main-600 focus:ring-offset-2 disabled:bg-gray-400/80 transition-colors duration-200", href=href)=text
 
       .mb-10.text-center
-        .hidden
-          +btn("getUserMedia", "#", "開啟桌機鏡頭")
-          +btn("startCapture", "#", "分享畫面")
-        div.mb-8
-        +btn("getUserMediaPhone", "#", "開啟手機鏡頭")
+        +btn("getUserMedia", "#", "開啟鏡頭")
         +btn("flipFacingMode", "#", "翻轉手機鏡頭")
+        .hidden
+          +btn("startCapture", "#", "分享畫面")
       
       // 畫面
       .relative(class="mb-10 max-w-7xl w-full h-0 pb-[177%] sm:pb-[56.25%]")
