@@ -36,11 +36,11 @@ document.addEventListener('DOMContentLoaded', async () => {
   let constraintsPhone = {
     audio: true,
     video: {
+      width: { min: 1280, ideal: 1280, max: 1920 },
+      height: { min: 720, ideal: 720, max: 1080 },
       // 行動裝置才能使用
-      facingMode: {
-        // user：前鏡頭、environment：後鏡頭
-        exact: facingMode ? 'user' : 'environment'
-      }
+      // user：前鏡頭、environment：後鏡頭
+      facingMode: 'environment'
 
     }
   };
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   btnFlip.addEventListener('click', async e => {
     e.preventDefault();
     facingMode = !facingMode;
-    constraintsPhone.video.facingMode.exact = facingMode ? 'user' : 'environment';
+    constraintsPhone.video.facingMode = facingMode ? 'user' : 'environment';
     await getMedia(constraintsPhone);
   }, false)
 
