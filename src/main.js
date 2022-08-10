@@ -21,7 +21,24 @@ document.addEventListener('DOMContentLoaded', async () => {
     videoMedia.onloadedmetadata = () => {
       videoMedia.play();
     };
-    console.log(mediaStream.getTracks());
+
+    // 抓出 tracks
+    const tracks = mediaStream.getTracks();
+
+    // 列出來源
+    const content = document.getElementById('mediaInput');
+    content.innerHTML = '';
+    Array.prototype.forEach.call(tracks, track => {
+      content.insertAdjacentHTML('beforeend', `<p class="inline-block px-2 py-1 bg-main outline-none rounded text-white text-xs">${track.kind}</p>`);
+      content.insertAdjacentHTML('beforeend', `<p class="mb-2 p-1 text-xs">${track.label}</p>`);
+    });
+
+    // 關閉鏡頭
+    const btnCloseMedia = document.getElementById('stopUserMedia');
+    btnCloseMedia.onclick = () => {
+      Array.prototype.forEach.call(tracks, track => track.stop());
+      content.innerHTML = '';
+    }
   }
 
   let facingMode = false; // false：後鏡頭、true：前鏡頭
@@ -53,6 +70,46 @@ document.addEventListener('DOMContentLoaded', async () => {
     await getMedia(constraints);
   }, false)
 
+  
+
+  // 取得使用者畫面並作分享
+  // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia
+  async function startCapture(constraints) {
+    let captureStream = await navigator.mediaDevices.getDisplayMedia(constraints);
+    videoCapture.srcObject = captureStream;
+    videoCapture.onloadedmetadata = () => {
+      videoCapture.play();
+    };
+
+     // 抓出 tracks
+    const tracks = captureStream.getTracks();
+
+    // 列出來源
+    const content = document.getElementById('captureInput');
+    content.innerHTML = '';
+    Array.prototype.forEach.call(tracks, track => {
+      content.insertAdjacentHTML('beforeend', `<p class="inline-block px-2 py-1 bg-main outline-none rounded text-white text-xs">${track.kind}</p>`);
+      content.insertAdjacentHTML('beforeend', `<p class="mb-2 p-1 text-xs">${track.label}</p>`);
+    });
+
+    // 關閉分享
+    const btnCloseCapture = document.getElementById('stopCapture');
+    btnCloseCapture.onclick = () => {
+      Array.prototype.forEach.call(tracks, track => track.stop());
+      content.innerHTML = '';
+    }
+
+    return captureStream;
+  }
+
+  const btnCapture = document.getElementById('startCapture');
+  btnCapture.addEventListener('click', async e => {
+    e.preventDefault();
+    const capture = await startCapture(constraints);
+    console.log(capture);
+  }, false);
+
+
 
   // 取得使用者的輸入源清單
   // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/enumerateDevices
@@ -78,6 +135,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       return devices;
     }
   }
+
   const btnEnumerate = document.getElementById('getEnumerateDevices');
   btnEnumerate.addEventListener('click', async e => {
     e.preventDefault();
@@ -91,6 +149,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       content.insertAdjacentHTML('beforeend', `<p class="mb-4 p-1">${device.label}</p>`);
     });
   }, false)
+
 
 
   // 取得使用者裝置支援的項目
@@ -113,29 +172,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         content.insertAdjacentHTML('beforeend', `<p class="py-1"><span class="inline-flex justify-center items-center mr-1 w-4 h-4 bg-red-600 rounded-full text-white text-sm">&times;</span>${key}</p>`)
       }
     })
-  }, false)
-
-  // 取得使用者畫面並作分享
-  // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia
-  async function startCapture(constraints) {
-    let captureStream;
-    try {
-      captureStream = await navigator.mediaDevices.getDisplayMedia(constraints);
-      videoCapture.srcObject = captureStream;
-      videoCapture.onloadedmetadata = () => {
-        videoCapture.play();
-      };
-    } catch (err) {
-      console.error(`Error: ${err}`);
-    }
-    console.log(captureStream.getTracks());
-    return captureStream;
-  }
-  const btnShare = document.getElementById('startCapture');
-  btnShare.addEventListener('click', async e => {
-    e.preventDefault();
-    const capture = await startCapture(constraints);
-    console.log(capture);
   }, false)
 
 

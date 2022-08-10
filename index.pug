@@ -82,6 +82,10 @@ html(lang="zh-Hant")
             +btn("getUserMedia", "#", "開啟鏡頭")
             +btn("flipFacingMode", "#", "翻轉手機鏡頭")
             +btn("stopUserMedia", "#", "關閉鏡頭")
+          
+          // 列出來源
+          #mediaInput
+          
           .relative(class="mb-10 max-w-7xl w-full h-0 pb-[177%] sm:pb-[56.25%]")
             video#video-media(class="absolute block w-full h-full", autoplay, playsinline, controls, poster="https://picsum.photos/640/360")
         
@@ -90,6 +94,10 @@ html(lang="zh-Hant")
           .mb-10.text-center
             +btn("startCapture", "#", "分享畫面")
             +btn("stopCapture", "#", "關閉分享畫面")
+          
+          // 列出來源
+          #captureInput
+
           .relative(class="mb-10 max-w-7xl w-full h-0 pb-[177%] sm:pb-[56.25%]")
             video#video-capture(class="absolute block w-full h-full", autoplay, playsinline, controls, poster="https://picsum.photos/640/360")
       
