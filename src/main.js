@@ -7,6 +7,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   // getDisplayMedia
   const videoCapture = document.getElementById('video-capture');
 
+  // addTrack：combine video
+  const combineVideo = document.getElementById('video-combine');
+  const combineVideoStream = new MediaStream();
+  function customAddTrack(track) {
+    combineVideoStream.addTrack(track);
+    let tracks = combineVideoStream.getTracks();
+    if(tracks.length > 0) {
+      combineVideo.srcObject = combineVideoStream;
+    }
+    console.log(tracks);
+  }
+
   // 取得使用者攝影機、麥克風的授權
   // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
   async function getMedia(constraints) {
@@ -31,6 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     Array.prototype.forEach.call(tracks, track => {
       content.insertAdjacentHTML('beforeend', `<p class="inline-block px-2 py-1 bg-main outline-none rounded text-white text-xs">${track.kind}</p>`);
       content.insertAdjacentHTML('beforeend', `<p class="mb-2 p-1 text-xs">${track.label}</p>`);
+      customAddTrack(track);
     });
 
     // 關閉鏡頭
@@ -90,6 +103,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     Array.prototype.forEach.call(tracks, track => {
       content.insertAdjacentHTML('beforeend', `<p class="inline-block px-2 py-1 bg-main outline-none rounded text-white text-xs">${track.kind}</p>`);
       content.insertAdjacentHTML('beforeend', `<p class="mb-2 p-1 text-xs">${track.label}</p>`);
+      customAddTrack(track);
     });
 
     // 關閉分享
@@ -106,7 +120,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   btnCapture.addEventListener('click', async e => {
     e.preventDefault();
     const capture = await startCapture(constraints);
-    console.log(capture);
   }, false);
 
 

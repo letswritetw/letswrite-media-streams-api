@@ -103,6 +103,14 @@ html(lang="zh-Hant")
       
       hr.my-8.border-0.border-b.border-zinc-200.border-opacity-40
 
+      // 合併影片
+      .mx-auto.max-w-3xl
+        p.mb-2.text-center.text-2xl.font-medium 測試 addTrack
+        .relative(class="mb-10 w-full h-0 pb-[177%] sm:pb-[56.25%]")
+          video#video-combine(class="absolute block w-full h-full", autoplay, playsinline, controls, poster="https://picsum.photos/640/360")
+
+      hr.my-8.border-0.border-b.border-zinc-200.border-opacity-40
+
       // 按鈕
       .mb-28.text-center
         +btn("getEnumerateDevices", "#", "取得輸入源清單")
