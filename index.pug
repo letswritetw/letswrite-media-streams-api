@@ -71,7 +71,7 @@ html(lang="zh-Hant")
       
       // 按鈕
       mixin btn(id, href, text)
-        a(id=id, class="mx-2 px-4 py-2 bg-main outline-none rounded text-white shadow-main-200 shadow-lg active:shadow-none active:scale-95 hover:bg-main-600 focus:bg-main-600 focus:ring-2 focus:ring-main-600 focus:ring-offset-2 disabled:bg-gray-400/80 transition-colors duration-200", href=href)=text
+        a(id=id, class="inline-block mx-2 mb-2 sm:mb-0 px-4 py-2 bg-main outline-none rounded text-white shadow-main-200 shadow-lg active:shadow-none active:scale-95 hover:bg-main-600 focus:bg-main-600 focus:ring-2 focus:ring-main-600 focus:ring-offset-2 disabled:bg-gray-400/80 transition-colors duration-200", href=href)=text
       
       // 畫面
       .flex.justify-center(class="flex-wrap lg:flex-nowrap")
@@ -85,8 +85,8 @@ html(lang="zh-Hant")
           
           // 列出來源
           #mediaInput
-          
-          .relative(class="mb-10 max-w-7xl w-full h-0 pb-[177%] sm:pb-[56.25%]")
+
+          .relative(class="mb-10 w-full h-0 pb-[177%] sm:pb-[56.25%]")
             video#video-media(class="absolute block w-full h-full", autoplay, playsinline, controls, poster="https://picsum.photos/640/360")
         
         // getDisplayMedia
@@ -98,7 +98,7 @@ html(lang="zh-Hant")
           // 列出來源
           #captureInput
 
-          .relative(class="mb-10 max-w-7xl w-full h-0 pb-[177%] sm:pb-[56.25%]")
+          .relative(class="mb-10 w-full h-0 pb-[177%] sm:pb-[56.25%]")
             video#video-capture(class="absolute block w-full h-full", autoplay, playsinline, controls, poster="https://picsum.photos/640/360")
       
       hr.my-8.border-0.border-b.border-zinc-200.border-opacity-40
