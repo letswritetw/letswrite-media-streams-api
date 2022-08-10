@@ -1,7 +1,11 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
 
-  const video = document.getElementById('video');
+  // getUserMedia
+  const videoMedia = document.getElementById('video-media');
+
+  // getDisplayMedia
+  const videoCapture = document.getElementById('video-capture');
 
   // 取得使用者攝影機、麥克風的授權
   // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
@@ -13,10 +17,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 console.error(`${err.name}: ${err.message}`);
               });
 
-    video.srcObject = mediaStream;
-    video.onloadedmetadata = () => {
-      video.play();
+    videoMedia.srcObject = mediaStream;
+    videoMedia.onloadedmetadata = () => {
+      videoMedia.play();
     };
+    console.log(mediaStream.getTracks());
   }
 
   let facingMode = false; // false：後鏡頭、true：前鏡頭
@@ -33,12 +38,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       facingMode: 'environment'
     }
   };
-  const btnUser = document.getElementById('getUserMedia');
-  btnUser.addEventListener('click', async e => {
+  const btnGetUserMedia = document.getElementById('getUserMedia');
+  btnGetUserMedia.addEventListener('click', async e => {
     e.preventDefault();
     await getMedia(constraints);
   }, false);
 
+  // 翻轉鏡頭
   const btnFlip = document.getElementById('flipFacingMode');
   btnFlip.addEventListener('click', async e => {
     e.preventDefault();
@@ -111,20 +117,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // 取得使用者畫面並作分享
   // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getDisplayMedia
-  async function startCapture(displayMediaOptions) {
+  async function startCapture(constraints) {
     let captureStream;
-
     try {
-      captureStream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+      captureStream = await navigator.mediaDevices.getDisplayMedia(constraints);
+      videoCapture.srcObject = captureStream;
+      videoCapture.onloadedmetadata = () => {
+        videoCapture.play();
+      };
     } catch (err) {
       console.error(`Error: ${err}`);
     }
+    console.log(captureStream.getTracks());
     return captureStream;
   }
   const btnShare = document.getElementById('startCapture');
   btnShare.addEventListener('click', async e => {
     e.preventDefault();
-    const capture = await startCapture();
+    const capture = await startCapture(constraints);
     console.log(capture);
   }, false)
 
