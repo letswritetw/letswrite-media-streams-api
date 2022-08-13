@@ -10,14 +10,29 @@ document.addEventListener('DOMContentLoaded', async () => {
   // addTrack：combine video
   const combineVideo = document.getElementById('video-combine');
   const combineVideoStream = new MediaStream();
-  function customAddTrack(track) {
-    combineVideoStream.addTrack(track);
+  function customAddTrack(track, stream) {
+    combineVideoStream.addTrack(track, stream);
     let tracks = combineVideoStream.getTracks();
     if(tracks.length > 0) {
       combineVideo.srcObject = combineVideoStream;
     }
     console.log(tracks);
   }
+
+  let facingMode = false; // false：後鏡頭、true：前鏡頭
+  let constraints = {
+    // deviceId: xxxxxx, // 可以指定要哪用個裝置，從 enumerateDevices 取得裝置 id
+    audio: false,
+    video: {
+      // 給理想值時，瀏覽器會去找符合理想值的裝置
+      width: { ideal: 1280 },
+      height: { ideal: 720 },
+
+      // 行動裝置才能使用
+      // user：前鏡頭、environment：後鏡頭
+      facingMode: 'environment'
+    }
+  };
 
   // 取得使用者攝影機、麥克風的授權
   // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia
@@ -43,10 +58,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     Array.prototype.forEach.call(tracks, track => {
       content.insertAdjacentHTML('beforeend', `<p class="inline-block px-2 py-1 bg-main outline-none rounded text-white text-xs">${track.kind}</p>`);
       content.insertAdjacentHTML('beforeend', `<p class="mb-2 p-1 text-xs">${track.label}</p>`);
-      customAddTrack(track);
+      customAddTrack(track, mediaStream);
     });
 
     // 關閉鏡頭
+    // https://developer.mozilla.org/en-US/docs/Web/API/MediaStreamTrack/stop
     const btnCloseMedia = document.getElementById('stopUserMedia');
     btnCloseMedia.onclick = () => {
       Array.prototype.forEach.call(tracks, track => track.stop());
@@ -54,20 +70,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  let facingMode = false; // false：後鏡頭、true：前鏡頭
-  let constraints = {
-    // deviceId: xxxxxx, // 可以指定要哪用個裝置，從 enumerateDevices 取得裝置 id
-    audio: true,
-    video: {
-      // 給理想值時，瀏覽器會去找符合理想值的裝置
-      width: { ideal: 1280 },
-      height: { ideal: 720 },
-
-      // 行動裝置才能使用
-      // user：前鏡頭、environment：後鏡頭
-      facingMode: 'environment'
-    }
-  };
   const btnGetUserMedia = document.getElementById('getUserMedia');
   btnGetUserMedia.addEventListener('click', async e => {
     e.preventDefault();
@@ -103,7 +105,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     Array.prototype.forEach.call(tracks, track => {
       content.insertAdjacentHTML('beforeend', `<p class="inline-block px-2 py-1 bg-main outline-none rounded text-white text-xs">${track.kind}</p>`);
       content.insertAdjacentHTML('beforeend', `<p class="mb-2 p-1 text-xs">${track.label}</p>`);
-      customAddTrack(track);
+      customAddTrack(track, captureStream);
     });
 
     // 關閉分享

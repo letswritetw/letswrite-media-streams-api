@@ -1,6 +1,6 @@
 - var link = 'media-streams-api'
-- var title = 'Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製'
-- var description = 'Media Streams API，開啟鏡頭、分享螢幕、截圖、錄製'
+- var title = 'Media Streams API，開啟鏡頭、分享螢幕'
+- var description = 'Media Streams API，開啟鏡頭、分享螢幕'
 
 <!DOCTYPE html>
 html(lang="zh-Hant")
@@ -104,8 +104,10 @@ html(lang="zh-Hant")
       hr.my-8.border-0.border-b.border-zinc-200.border-opacity-40
 
       // 合併影片
-      .mx-auto.max-w-3xl
-        p.mb-2.text-center.text-2xl.font-medium 測試 addTrack
+      p.mb-4.text-center.text-2xl.font-medium 測試 addTrack
+
+      .flex.mx-auto.max-w-3xl
+        
         .relative(class="mb-10 w-full h-0 pb-[177%] sm:pb-[56.25%]")
           video#video-combine(class="absolute block w-full h-full", autoplay, playsinline, controls, poster="https://picsum.photos/640/360")
 
